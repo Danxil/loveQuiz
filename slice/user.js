@@ -1,4 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {requestUserIsAllow} from '../api/user';
 
 const initialState = {
   skills: [
@@ -31,6 +32,14 @@ const initialState = {
   allow: false,
 };
 
+export const getUserIsAllow = createAsyncThunk(
+  'user/getUserIsAllow',
+  async () => {
+    const response = await requestUserIsAllow();
+    return response;
+  },
+);
+
 export const slice = createSlice({
   name: 'user',
   initialState,
@@ -52,6 +61,11 @@ export const slice = createSlice({
     completeTask: (state, {payload: {taskId}}) => {
       state.completedTasksIds.push(taskId);
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(getUserIsAllow.fulfilled, (state, action) => {
+      state.allow = action.payload;
+    });
   },
 });
 

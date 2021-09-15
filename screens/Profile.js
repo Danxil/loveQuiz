@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import * as Progress from 'react-native-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WebView} from 'react-native-webview';
@@ -13,7 +13,6 @@ import {
   ScrollView,
   Modal,
   useWindowDimensions,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import {COLORS} from '../constants';
@@ -21,8 +20,15 @@ import Btn from './Btn';
 import Task from './Task';
 import {getComplexity, getSkill} from '../helpers';
 import TaskItem from './TaskItem';
+import {selectIsUserAllow} from '../selectors/user';
+import {
+  ONLINE_PRACTICE_TEXT_BLACK,
+  ONLINE_PRACTICE_TEXT_WHITE,
+} from '../constants/text';
+import { getUserIsAllow } from "../slice/user";
 
 const Profile = ({navigation}) => {
+  const dispatch = useDispatch();
   const layout = useWindowDimensions();
   const tasks = useSelector(state => state.tasks);
   const taskOnline = tasks.online[0];
@@ -35,6 +41,7 @@ const Profile = ({navigation}) => {
   };
   const skills = useSelector(state => state.user.skills);
   const completedTasksIds = useSelector(state => state.user.completedTasksIds);
+  const allow = useSelector(selectIsUserAllow);
 
   const closeTask = () => {
     setTaskToDisplay(null);
@@ -53,7 +60,11 @@ const Profile = ({navigation}) => {
     {key: 'practice', title: 'Практика онлайн'},
   ]);
 
-  const renderScene = SceneMap({
+  useEffect(() => {
+    dispatch(getUserIsAllow());
+  }, []);
+
+  const sceneObject = {
     tasks: () => (
       <View style={{flex: 1}}>
         <ScrollView style={styles.scrollView}>
@@ -78,7 +89,10 @@ const Profile = ({navigation}) => {
         </ScrollView>
       </View>
     ),
-    practice: () => (
+  };
+
+  if (allow) {
+    sceneObject.practice = () => (
       <View
         style={{
           flex: 1,
@@ -86,15 +100,51 @@ const Profile = ({navigation}) => {
           justifyContent: 'space-evenly',
         }}>
         <Text style={{color: 'white', textAlign: 'center', lineHeight: 20}}>
-          Онлайн знакомства должны быть для тебя пассивным источником трафика.
-          Общайся в свободное время, но не забывай, что оффлайн - приоритет
+          {ONLINE_PRACTICE_TEXT_BLACK}
         </Text>
         <Btn onPress={() => setPracticeMode(true)}>
           Перейти к онлайн практике
         </Btn>
       </View>
-    ),
-  });
+    );
+  } else {
+    sceneObject.practice = () => (
+      <View style={{flex: 1}}>
+        <ScrollView style={styles.scrollView}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              lineHeight: 20,
+              marginTop: 50,
+              marginBottom: 50,
+            }}>
+            {ONLINE_PRACTICE_TEXT_WHITE}
+          </Text>
+          {tasks.online.map((data, index) => {
+            const isTaskCompeted = completedTasksIds.includes(data.id);
+            const isTaskLocked = index >= completedTasksIds.length + 2;
+            return (
+              <TaskItem
+                key={data.title}
+                isTaskCompeted={isTaskCompeted}
+                isTaskLocked={isTaskLocked}
+                title={data.title}
+                description={data.description}
+                complexity={data.complexity}
+                openTask={() => openTask(data)}
+              />
+            );
+          })}
+          <Text style={styles.additionalText}>
+            Выполни текущиие задания, что бы открыть новые!
+          </Text>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  const renderScene = SceneMap(sceneObject);
 
   return (
     <SafeAreaView
@@ -187,82 +237,83 @@ const Profile = ({navigation}) => {
             }
           />
         </Modal>
-        <Modal
-          animationType="slide"
-          visible={practiceMode}
-          style={{backgroundColor: COLORS.primary}}>
-          <SafeAreaView
-            style={{
-              flex: 1,
-              backgroundColor: '#322e55',
-            }}>
-            <WebView source={{uri: 'https://www.gismeteo.ua/'}} />
-            <View
+        {allow && (
+          <Modal
+            animationType="slide"
+            visible={practiceMode}
+            style={{backgroundColor: COLORS.primary}}>
+            <SafeAreaView
               style={{
-                padding: 15,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                maxHeight: 120,
+                flex: 1,
+                backgroundColor: '#322e55',
               }}>
-              {/* <Btn style={{ marginTop: 10 }} onPress={() => setPracticeMode(false)}>Назад</Btn> */}
-              <View style={{width: 80, justifyContent: 'center'}}>
-                <MaterialCommunityIcons
-                  onPress={() => setPracticeMode(false)}
-                  name="chevron-left-circle-outline"
-                  size={45}
-                  color="#fff"
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => setShowPracticeTask(true)}
+              <WebView source={{uri: 'http://link.sto-rank.com'}} />
+              <View
                 style={{
-                  backgroundColor: COLORS.primary,
-                  margin: -15,
                   padding: 15,
-                  marginBottom: -50,
-                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  maxHeight: 120,
                 }}>
-                <View>
-                  <Text style={{color: 'white'}}>
-                    <Text style={{fontWeight: 'bold'}}>Задание:</Text>{' '}
-                    {taskOnline.title}
-                  </Text>
-                  <Text style={{color: 'white', marginTop: 3}}>
-                    <Text style={{fontWeight: 'bold'}}>Сложность:</Text>{' '}
-                    {getComplexity(taskOnline.complexity)}
-                  </Text>
-                  <Text style={{color: 'white', marginTop: 10}}>
-                    {taskOnline.description}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={showPracticeTask}>
-              <View style={{flex: 1, backgroundColor: '#00000099'}}>
-                <View style={{height: '100%', marginTop: 'auto'}}>
-                  <Task
-                    online={true}
-                    id={taskOnline?.id}
-                    title={taskOnline?.title}
-                    quizId={taskOnline?.quizId}
-                    text={taskOnline?.text}
-                    complexity={taskOnline?.complexity}
-                    onClose={() => setShowPracticeTask(false)}
-                    onComplete={completeTask}
-                    completed={
-                      taskOnline
-                        ? completedTasksIds.includes(taskOnline.id)
-                        : false
-                    }
+                <View style={{width: 80, justifyContent: 'center'}}>
+                  <MaterialCommunityIcons
+                    onPress={() => setPracticeMode(false)}
+                    name="chevron-left-circle-outline"
+                    size={45}
+                    color="#fff"
                   />
                 </View>
+                <TouchableOpacity
+                  onPress={() => setShowPracticeTask(true)}
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    margin: -15,
+                    padding: 15,
+                    marginBottom: -50,
+                    flex: 1,
+                  }}>
+                  <View>
+                    <Text style={{color: 'white'}}>
+                      <Text style={{fontWeight: 'bold'}}>Задание:</Text>{' '}
+                      {taskOnline.title}
+                    </Text>
+                    <Text style={{color: 'white', marginTop: 3}}>
+                      <Text style={{fontWeight: 'bold'}}>Сложность:</Text>{' '}
+                      {getComplexity(taskOnline.complexity)}
+                    </Text>
+                    <Text style={{color: 'white', marginTop: 10}}>
+                      {taskOnline.description}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            </Modal>
-          </SafeAreaView>
-        </Modal>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={showPracticeTask}>
+                <View style={{flex: 1, backgroundColor: '#00000099'}}>
+                  <View style={{height: '100%', marginTop: 'auto'}}>
+                    <Task
+                      online={true}
+                      id={taskOnline?.id}
+                      title={taskOnline?.title}
+                      quizId={taskOnline?.quizId}
+                      text={taskOnline?.text}
+                      complexity={taskOnline?.complexity}
+                      onClose={() => setShowPracticeTask(false)}
+                      onComplete={completeTask}
+                      completed={
+                        taskOnline
+                          ? completedTasksIds.includes(taskOnline.id)
+                          : false
+                      }
+                    />
+                  </View>
+                </View>
+              </Modal>
+            </SafeAreaView>
+          </Modal>
+        )}
       </View>
     </SafeAreaView>
   );

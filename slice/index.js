@@ -2,6 +2,7 @@ import quizzesReducer from './quizzes';
 import userReducer from './user';
 import tasksReducer from './tasks';
 import {persistStore, persistReducer} from 'redux-persist';
+import thunkMiddleware from 'redux-thunk';
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import logger from 'redux-logger';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -21,8 +22,9 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [];
-
 if (__DEV__) middlewares.push(logger);
+
+middlewares.push(thunkMiddleware);
 
 export const store = createStore(
   persistedReducer,
