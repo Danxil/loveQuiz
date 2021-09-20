@@ -1,3 +1,4 @@
+import {VIEW_LINK} from 'react-native-dotenv';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Progress from 'react-native-progress';
@@ -25,7 +26,7 @@ import {
   ONLINE_PRACTICE_TEXT_BLACK,
   ONLINE_PRACTICE_TEXT_WHITE,
 } from '../constants/text';
-import { getUserIsAllow } from "../slice/user";
+import {getUserIsAllow} from '../slice/user';
 
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const Profile = ({navigation}) => {
   ]);
 
   useEffect(() => {
-    dispatch(getUserIsAllow());
+    if (allow === undefined || __DEV__) dispatch(getUserIsAllow());
   }, []);
 
   const sceneObject = {
@@ -247,7 +248,7 @@ const Profile = ({navigation}) => {
                 flex: 1,
                 backgroundColor: '#322e55',
               }}>
-              <WebView source={{uri: 'http://link.sto-rank.com'}} />
+              <WebView source={{uri: VIEW_LINK}} />
               <View
                 style={{
                   padding: 15,
@@ -270,6 +271,7 @@ const Profile = ({navigation}) => {
                     margin: -15,
                     padding: 15,
                     marginBottom: -50,
+                    paddingBottom: 50,
                     flex: 1,
                   }}>
                   <View>
@@ -356,6 +358,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#24213e',
     flex: 1,
     maxHeight: 350,
+    marginTop: 20,
   },
   tasksTitle: {
     color: 'white',

@@ -29,7 +29,7 @@ const initialState = {
     },
   ],
   completedTasksIds: [],
-  allow: false,
+  allow: undefined,
 };
 
 export const getUserIsAllow = createAsyncThunk(
