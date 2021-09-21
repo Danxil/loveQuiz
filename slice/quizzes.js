@@ -1,28 +1,29 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {createSlice} from '@reduxjs/toolkit';
+import i18next from 'i18next';
 
 const initialState = {
   startQuiz: {
     type: 'answers_amount',
     results: {
       1: {
-        text: 'Ты слишком самовлюбленный. Если ты хочешь построить взаимоотношения тебе нужно поработать со своим характером, и пересмотреть взгляды на окружающий мир. Начни с того чтобы больше замечать желания и чувства других людей.',
+        text: i18next.t('quizzes.startQuiz.results.1.text'),
       },
       2: {
-        text: 'В твоих ответах замечены нотки пессимизма и не уверенности. Выше голову! Расправь плечи и начни искать позитивное моменты. Читай книги, найди хобби, сделай шаг на встречу любимому делу. Нужно активно работать над собой.',
+        text: i18next.t('quizzes.startQuiz.results.2.text'),
       },
       3: {
-        text: 'Ты уверенный в себе, знаешь цену себе и другим людям. Возможно тебя часто держат во френд-зоне т.к. ты слишком хороший и добрый. Продолжай развиваться, заниматься любимым делом, путешествуй, знакомься с новыми людьми. Проводи жизнь активно и ты прийдешь к успеху.',
+        text: i18next.t('quizzes.startQuiz.results.3.text'),
       },
     },
     questions: [
       {
-        question: 'Я пойду на второе свидание если',
+        question: i18next.t('quizzes.startQuiz.questions.0.question'),
         options: [
           {
             score: 1,
-            text: 'Она мне понравилась',
+            text: i18next.t('quizzes.startQuiz.questions.0.options.0.text'),
             result: [
               {
                 target: {
@@ -48,7 +49,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Я ей понравился',
+            text: i18next.t('quizzes.startQuiz.questions.0.options.1.text'),
             result: [
               {
                 target: {
@@ -74,7 +75,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Главное чтобы мы понравились друг другу',
+            text: i18next.t('quizzes.startQuiz.questions.0.options.2.text'),
             result: [
               {
                 target: {
@@ -101,11 +102,11 @@ const initialState = {
         ],
       },
       {
-        question: 'Как бы ты оценил уровень своей коммуникабельности',
+        question: i18next.t('quizzes.startQuiz.questions.1.question'),
         options: [
           {
             score: 1,
-            text: 'Все плохо',
+            text: i18next.t('quizzes.startQuiz.questions.1.options.0.text'),
             result: [
               {
                 target: {
@@ -121,7 +122,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Не самая плохая ситуация, но нужно много работать',
+            text: i18next.t('quizzes.startQuiz.questions.1.options.1.text'),
             result: [
               {
                 target: {
@@ -137,7 +138,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Все хорошо, по большей части с этим нет проблем',
+            text: i18next.t('quizzes.startQuiz.questions.1.options.2.text'),
             result: [
               {
                 target: {
@@ -153,7 +154,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'С этим у меня все прекрасно!',
+            text: i18next.t('quizzes.startQuiz.questions.1.options.3.text'),
             result: [
               {
                 target: {
@@ -170,28 +171,28 @@ const initialState = {
         ],
       },
       {
-        question: 'Девушки чаще всего замечают в тебе',
+        question: i18next.t('quizzes.startQuiz.questions.2.question'),
         options: [
           {
             score: 1,
-            text: 'Внешность',
+            text: i18next.t('quizzes.startQuiz.questions.2.options.0.text'),
           },
           {
             score: 2,
-            text: 'Финансовую независимость',
+            text: i18next.t('quizzes.startQuiz.questions.2.options.1.text'),
           },
           {
             score: 2,
-            text: 'Ум',
+            text: i18next.t('quizzes.startQuiz.questions.2.options.2.text'),
           },
         ],
       },
       {
-        question: 'Как бы ты оценил уровень своей раскованности',
+        question: i18next.t('quizzes.startQuiz.questions.3.question'),
         options: [
           {
             score: 1,
-            text: 'Все плохо',
+            text: i18next.t('quizzes.startQuiz.questions.3.options.0.text'),
             result: [
               {
                 target: {
@@ -207,7 +208,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Не самая плохая ситуация, но нужно много работать',
+            text: i18next.t('quizzes.startQuiz.questions.3.options.1.text'),
             result: [
               {
                 target: {
@@ -223,7 +224,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Все хорошо, по большей части с этим нет проблем',
+            text: i18next.t('quizzes.startQuiz.questions.3.options.2.text'),
             result: [
               {
                 target: {
@@ -239,7 +240,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'С этим у меня все прекрасно!',
+            text: i18next.t('quizzes.startQuiz.questions.3.options.3.text'),
             result: [
               {
                 target: {
@@ -256,11 +257,11 @@ const initialState = {
         ],
       },
       {
-        question: 'Насколько важна внешность девушки?',
+        question: i18next.t('quizzes.startQuiz.questions.4.question'),
         options: [
           {
             score: 1,
-            text: 'Она должна быть идеальной на 100% и никаких исключений',
+            text: i18next.t('quizzes.startQuiz.questions.4.options.0.text'),
             result: [
               {
                 target: {
@@ -286,7 +287,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Мне не важно как она выглядит',
+            text: i18next.t('quizzes.startQuiz.questions.4.options.1.text'),
             result: [
               {
                 target: {
@@ -302,7 +303,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Главное ухоженная',
+            text: i18next.t('quizzes.startQuiz.questions.4.options.2.text'),
             result: [
               {
                 target: {
@@ -319,11 +320,11 @@ const initialState = {
         ],
       },
       {
-        question: 'Как бы ты оценил уровень своей креативности',
+        question: i18next.t('quizzes.startQuiz.questions.5.question'),
         options: [
           {
             score: 1,
-            text: 'Все плохо',
+            text: i18next.t('quizzes.startQuiz.questions.5.options.0.text'),
             result: [
               {
                 target: {
@@ -339,7 +340,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Не самая плохая ситуация, но нужно много работать',
+            text: i18next.t('quizzes.startQuiz.questions.5.options.1.text'),
             result: [
               {
                 target: {
@@ -355,7 +356,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Все хорошо, по большей части с этим нет проблем',
+            text: i18next.t('quizzes.startQuiz.questions.5.options.2.text'),
             result: [
               {
                 target: {
@@ -371,7 +372,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'С этим у меня все прекрасно!',
+            text: i18next.t('quizzes.startQuiz.questions.5.options.3.text'),
             result: [
               {
                 target: {
@@ -388,28 +389,28 @@ const initialState = {
         ],
       },
       {
-        question: 'Что больше всего ценишь в девушках?',
+        question: i18next.t('quizzes.startQuiz.questions.6.question'),
         options: [
           {
             score: 1,
-            text: 'Внешность',
+            text: i18next.t('quizzes.startQuiz.questions.6.options.0.text'),
           },
           {
             score: 2,
-            text: 'Ум',
+            text: i18next.t('quizzes.startQuiz.questions.6.options.1.text'),
           },
           {
             score: 3,
-            text: 'Для меня важно какой она человек',
+            text: i18next.t('quizzes.startQuiz.questions.6.options.2.text'),
           },
         ],
       },
       {
-        question: 'Как бы ты оценил уровень своей экстраверсии',
+        question: i18next.t('quizzes.startQuiz.questions.7.question'),
         options: [
           {
             score: 1,
-            text: 'Все плохо',
+            text: i18next.t('quizzes.startQuiz.questions.7.options.0.text'),
             result: [
               {
                 target: {
@@ -425,7 +426,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Не самая плохая ситуация, но нужно много работать',
+            text: i18next.t('quizzes.startQuiz.questions.7.options.1.text'),
             result: [
               {
                 target: {
@@ -441,7 +442,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Все хорошо, по большей части с этим нет проблем',
+            text: i18next.t('quizzes.startQuiz.questions.7.options.2.text'),
             result: [
               {
                 target: {
@@ -457,7 +458,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'С этим у меня все прекрасно!',
+            text: i18next.t('quizzes.startQuiz.questions.7.options.3.text'),
             result: [
               {
                 target: {
@@ -474,28 +475,28 @@ const initialState = {
         ],
       },
       {
-        question: 'Важен ли возраст девушки?',
+        question: i18next.t('quizzes.startQuiz.questions.8.question'),
         options: [
           {
             score: 1,
-            text: 'Она должна быть младше',
+            text: i18next.t('quizzes.startQuiz.questions.8.options.0.text'),
           },
           {
             score: 2,
-            text: 'Люблю девушек постарше',
+            text: i18next.t('quizzes.startQuiz.questions.8.options.1.text'),
           },
           {
             score: 3,
-            text: 'Для меня это не важно',
+            text: i18next.t('quizzes.startQuiz.questions.8.options.2.text'),
           },
         ],
       },
       {
-        question: 'Как бы ты оценил уровень своей эмпатии',
+        question: i18next.t('quizzes.startQuiz.questions.9.question'),
         options: [
           {
             score: 1,
-            text: 'Все плохо',
+            text: i18next.t('quizzes.startQuiz.questions.9.options.0.text'),
             result: [
               {
                 target: {
@@ -511,7 +512,7 @@ const initialState = {
           },
           {
             score: 2,
-            text: 'Не самая плохая ситуация, но нужно много работать',
+            text: i18next.t('quizzes.startQuiz.questions.9.options.1.text'),
             result: [
               {
                 target: {
@@ -527,7 +528,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Все хорошо, по большей части с этим нет проблем',
+            text: i18next.t('quizzes.startQuiz.questions.9.options.2.text'),
             result: [
               {
                 target: {
@@ -543,7 +544,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'С этим у меня все прекрасно!',
+            text: i18next.t('quizzes.startQuiz.questions.9.options.3.text'),
             result: [
               {
                 target: {
@@ -560,53 +561,31 @@ const initialState = {
         ],
       },
       {
-        question: 'Идеальная девушка посвящает свое время',
+        question: i18next.t('quizzes.startQuiz.questions.10.question'),
         options: [
           {
             score: 1,
-            text: 'Дому',
+            text: i18next.t('quizzes.startQuiz.questions.10.options.0.text'),
           },
           {
             score: 2,
-            text: 'Карьере',
+            text: i18next.t('quizzes.startQuiz.questions.10.options.1.text'),
           },
           {
             score: 3,
-            text: 'Любимому человеку',
+            text: i18next.t('quizzes.startQuiz.questions.10.options.2.text'),
           },
         ],
       },
-      // {
-      //     question: 'Как бы ты оценил уровень своей уверенности в себе',
-      //     options: [
-      //         {
-      //             score: 1,
-      //             text: 'Все плохо',
-      //         },
-      //         {
-      //             score: 2,
-      //             text: 'Не самая плохая ситуация, но нужно много работать'
-      //         },
-      //         {
-      //             score: 3,
-      //             text: 'Все хорошо, по большей части с этим нет проблем'
-      //         },
-      //         {
-      //             score: 3,
-      //             text: 'С этим у меня все прекрасно!'
-      //         },
-      //     ],
-      // },
     ],
-    quizResultTitle: 'Твой текущий уровень',
-    quizResultDescription:
-      'Мы определили твой текущий уровень. Развивай слабые стороны выполняя задания и закрепляя опыт на практике',
+    quizResultTitle: i18next.t('quizzes.startQuiz.quizResultTitle'),
+    quizResultDescription: i18next.t('quizzes.startQuiz.quizResultDescription'),
   },
   task_1: {
     type: 'answers_amount',
     results: {
       1: {
-        text: 'Продолжай выполнять задание, ты должен начать получать кайф от процесса',
+        text: i18next.t('quizzes.task_1.results.1.text'),
         result: [
           {
             target: {
@@ -620,7 +599,7 @@ const initialState = {
         ],
       },
       2: {
-        text: 'Легкий дискомфорт это норма, но лучше продолжи выполнять задание пока не почувствуешь чувство игры и драйва',
+        text: i18next.t('quizzes.task_1.results.2.text'),
         result: [
           {
             target: {
@@ -634,7 +613,7 @@ const initialState = {
         ],
       },
       3: {
-        text: 'Поздравления! Можешь преходить к следующему заданию',
+        text: i18next.t('quizzes.task_1.results.3.text'),
         result: [
           {
             target: {
@@ -648,7 +627,7 @@ const initialState = {
         ],
       },
       4: {
-        text: 'Возможно это упражнение слишком легкое для тебя. Завершай и преходи к следующему заданию',
+        text: i18next.t('quizzes.task_1.results.4.text'),
         result: [
           {
             target: {
@@ -664,15 +643,15 @@ const initialState = {
     },
     questions: [
       {
-        question: 'Что ты чувствовал на последних подходах по заданию?',
+        question: i18next.t('quizzes.task_1.questions.0.question'),
         options: [
           {
             score: 1,
-            text: 'Страх',
+            text: i18next.t('quizzes.task_1.questions.0.options.0.text'),
           },
           {
             score: 2,
-            text: 'Дискомфорт',
+            text: i18next.t('quizzes.task_1.questions.0.options.1.text'),
             result: [
               {
                 target: {
@@ -688,7 +667,7 @@ const initialState = {
           },
           {
             score: 3,
-            text: 'Драйв',
+            text: i18next.t('quizzes.task_1.questions.0.options.2.text'),
             result: [
               {
                 target: {
@@ -724,7 +703,7 @@ const initialState = {
           },
           {
             score: 4,
-            text: 'Ничего',
+            text: i18next.t('quizzes.task_1.questions.0.options.3.text'),
             result: [
               {
                 target: {

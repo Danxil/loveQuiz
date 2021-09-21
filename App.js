@@ -1,6 +1,7 @@
 import {Provider} from 'react-redux';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as RNLocalize from 'react-native-localize';
 import {PersistGate} from 'redux-persist/integration/react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,7 +13,27 @@ import QuizResult from './screens/QuizResult';
 import TaskQuizResult from './screens/TaskQuizResult';
 import Profile from './screens/Profile';
 import {store, persistor} from './slice';
+import i18next from 'i18next';
+import {initReactI18next} from 'react-i18next';
+import localesEn from './locales/en';
+import localesRu from './locales/ru';
 
+i18next.use(initReactI18next).init({
+  debug: true,
+  resources: {
+    en: {
+      translation: localesEn,
+    },
+    ru: {
+      translation: localesRu,
+    },
+  },
+  interpolation: {
+    escapeValue: false,
+  },
+  lng: __DEV__ ? 'ru' : RNLocalize.getLocales().languageCode,
+  fallbackLng: 'en',
+});
 const Stack = createNativeStackNavigator();
 
 const App = () => {

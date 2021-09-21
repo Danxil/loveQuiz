@@ -13,6 +13,7 @@ import Option from './Option';
 import Btn from './Btn';
 import {useProcessAnswer} from '../hooks/quiz';
 import {COLORS} from '../constants';
+import {useTranslation} from 'react-i18next';
 
 const Quiz = ({
   navigation,
@@ -25,6 +26,8 @@ const Quiz = ({
   const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false);
+
+  const {t} = useTranslation();
 
   const data = useSelector(state => state.quizzes[quizId]);
 
@@ -102,7 +105,7 @@ const Quiz = ({
         navigation.navigate('TaskQuizResult', {
           text: result.text,
           taskId,
-          title: 'Завершай задание только, если действительно выполнил его',
+          title: t('quizCompletion.title'),
           ableToComplete: ableToCompleteTask,
         });
       }
@@ -172,7 +175,7 @@ const Quiz = ({
   };
   const renderNextButton = () => {
     if (showNextButton) {
-      return <Btn onPress={handleNext}>Далее</Btn>;
+      return <Btn onPress={handleNext}>{t('quiz.nextBtn')}</Btn>;
     } else {
       return null;
     }

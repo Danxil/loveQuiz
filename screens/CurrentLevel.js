@@ -1,19 +1,19 @@
-
 import React from 'react';
-import { Text } from 'react-native';
+import {Text} from 'react-native';
 import QuizPreview from './QuizPreview';
+import {useTranslation} from 'react-i18next';
 
-const CurrentLevel = (props) => {
+const CurrentLevel = props => {
+  const {t} = useTranslation();
   return (
     <QuizPreview
       {...props}
-      title="Психологический портрет"
-      text={<Text>На его основе мы узнаем твои слабые стороны{'\n'}{'\n'}Нейронная сеть сгенерирует план развития и по мере твоего роста будет корректировать его</Text>}
-      btnLabel="Далее"
+      title={t('currentLevel.title')}
+      text={t('currentLevel.text')}
+      btnLabel={t('currentLevel.btnLabel')}
       onDone={() => props.navigation.navigate('CurrentLevel2')}
     />
   );
 };
-
 
 export default CurrentLevel;

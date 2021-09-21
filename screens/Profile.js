@@ -16,6 +16,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
 } from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {COLORS} from '../constants';
 import Btn from './Btn';
 import Task from './Task';
@@ -32,6 +33,7 @@ const Profile = ({navigation}) => {
   const dispatch = useDispatch();
   const layout = useWindowDimensions();
   const tasks = useSelector(state => state.tasks);
+  const {t} = useTranslation();
   const taskOnline = tasks.online[0];
 
   const [taskToDisplay, setTaskToDisplay] = useState(null);
@@ -57,12 +59,14 @@ const Profile = ({navigation}) => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'tasks', title: 'Задания'},
-    {key: 'practice', title: 'Практика онлайн'},
+    {key: 'tasks', title: t('profileScreen.tasksTabTitle')},
+    {key: 'practice', title: t('profileScreen.practiceTabTitle')},
   ]);
 
   useEffect(() => {
-    if (allow === undefined || __DEV__) dispatch(getUserIsAllow());
+    if (allow === undefined || __DEV__) {
+      dispatch(getUserIsAllow());
+    }
   }, []);
 
   const sceneObject = {
@@ -85,7 +89,7 @@ const Profile = ({navigation}) => {
             );
           })}
           <Text style={styles.additionalText}>
-            Выполни текущиие задания, что бы открыть новые!
+            {t('profileScreen.completeTasksToContinue')}
           </Text>
         </ScrollView>
       </View>
@@ -101,10 +105,10 @@ const Profile = ({navigation}) => {
           justifyContent: 'space-evenly',
         }}>
         <Text style={{color: 'white', textAlign: 'center', lineHeight: 20}}>
-          {ONLINE_PRACTICE_TEXT_BLACK}
+          {t('profileScreen.onlinePracticeTextBlack')}
         </Text>
         <Btn onPress={() => setPracticeMode(true)}>
-          Перейти к онлайн практике
+          {t('profileScreen.goToOnlinePracticeBtn')}
         </Btn>
       </View>
     );
@@ -120,7 +124,7 @@ const Profile = ({navigation}) => {
               marginTop: 50,
               marginBottom: 50,
             }}>
-            {ONLINE_PRACTICE_TEXT_WHITE}
+            {t('profileScreen.skills.onlinePracticeTextWhite')}
           </Text>
           {tasks.online.map((data, index) => {
             const isTaskCompeted = completedTasksIds.includes(data.id);
@@ -138,7 +142,7 @@ const Profile = ({navigation}) => {
             );
           })}
           <Text style={styles.additionalText}>
-            Выполни текущиие задания, что бы открыть новые!
+            {t('profileScreen.completeTasksToContinue')}
           </Text>
         </ScrollView>
       </View>
@@ -175,7 +179,6 @@ const Profile = ({navigation}) => {
               backgroundColor: '#00000050',
             }}
           />
-
           <View
             style={{
               flex: 1,
@@ -190,7 +193,7 @@ const Profile = ({navigation}) => {
                 paddingTop: 0,
                 alignSelf: 'center',
               }}>
-              <Text style={styles.skillsTitle}>Профиль</Text>
+              <Text style={styles.skillsTitle}>{t('profileScreen.title')}</Text>
               {skills.map(({id, level}) => (
                 <View key={id}>
                   <Text style={styles.skillLabel}>{getSkill(id)}</Text>
@@ -276,11 +279,11 @@ const Profile = ({navigation}) => {
                   }}>
                   <View>
                     <Text style={{color: 'white'}}>
-                      <Text style={{fontWeight: 'bold'}}>Задание:</Text>{' '}
+                      <Text style={{fontWeight: 'bold'}}>{t('taskItemTaskLabel')}:</Text>{' '}
                       {taskOnline.title}
                     </Text>
                     <Text style={{color: 'white', marginTop: 3}}>
-                      <Text style={{fontWeight: 'bold'}}>Сложность:</Text>{' '}
+                      <Text style={{fontWeight: 'bold'}}>{t('taskItemComplexityLabel')}:</Text>{' '}
                       {getComplexity(taskOnline.complexity)}
                     </Text>
                     <Text style={{color: 'white', marginTop: 10}}>
