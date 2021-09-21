@@ -31,7 +31,7 @@ i18next.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
-  lng: __DEV__ ? 'ru' : RNLocalize.getLocales().languageCode,
+  lng: __DEV__ ? 'en' : RNLocalize.getLocales().languageCode,
   fallbackLng: 'en',
 });
 const Stack = createNativeStackNavigator();

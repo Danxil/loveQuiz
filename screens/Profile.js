@@ -124,7 +124,7 @@ const Profile = ({navigation}) => {
               marginTop: 50,
               marginBottom: 50,
             }}>
-            {t('profileScreen.skills.onlinePracticeTextWhite')}
+            {t('profileScreen.onlinePracticeTextWhite')}
           </Text>
           {tasks.online.map((data, index) => {
             const isTaskCompeted = completedTasksIds.includes(data.id);
