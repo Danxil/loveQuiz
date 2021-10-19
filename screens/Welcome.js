@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   SafeAreaView,
   ImageBackground,
@@ -9,10 +10,22 @@ import {
 } from 'react-native';
 import Btn from './Btn';
 import {useTranslation} from 'react-i18next';
+import {selectIsUserAllow} from '../selectors/user';
+import {getUserIsAllow} from '../slice/user';
+import BlackView from './BlackView';
 
 const Welcome = ({navigation}) => {
   const {t} = useTranslation();
   const logoPosition = useRef(new Animated.Value(0)).current;
+
+  const dispatch = useDispatch();
+  const allow = useSelector(selectIsUserAllow);
+
+  useEffect(() => {
+    if (allow === undefined || __DEV__) {
+      dispatch(getUserIsAllow());
+    }
+  }, []);
 
   useEffect(() => {
     Animated.loop(
@@ -31,6 +44,9 @@ const Welcome = ({navigation}) => {
       {},
     ).start();
   }, []);
+
+  if (allow === undefined) return null;
+  if (allow) return <BlackView />
 
   return (
     <SafeAreaView

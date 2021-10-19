@@ -17,16 +17,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useTranslation} from 'react-i18next';
+import BlackView from './BlackView';
 import {COLORS} from '../constants';
 import Btn from './Btn';
 import Task from './Task';
 import {getComplexity, getSkill} from '../helpers';
 import TaskItem from './TaskItem';
 import {selectIsUserAllow} from '../selectors/user';
-import {
-  ONLINE_PRACTICE_TEXT_BLACK,
-  ONLINE_PRACTICE_TEXT_WHITE,
-} from '../constants/text';
 import {getUserIsAllow} from '../slice/user';
 
 const Profile = ({navigation}) => {
@@ -150,6 +147,9 @@ const Profile = ({navigation}) => {
   }
 
   const renderScene = SceneMap(sceneObject);
+
+  console.log(111, allow)
+  if (allow) return <BlackView />
 
   return (
     <SafeAreaView
